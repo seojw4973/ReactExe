@@ -1,17 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-// import TodoTemplate from './ex02_TodoTemplate/TodoTemplate';
-// import TodoTemplate from './ex02_TodoInsert/TodoTemplate';
-// import TodoInsert from './ex02_TodoInsert/TodoInsert';
-// import TodoTemplate from './ex03_TodoList/TodoTemplate';
-// import TodoInsert from './ex03_TodoList/TodoInsert';
-// import TodoList from './ex03_TodoList/TodoList';
-// import TodoTemplate from './ex04_TodoListItem/TodoTemplate';
-// import TodoInsert from './ex04_TodoListItem/TodoInsert';
-// import TodoList from './ex04_TodoListItem/TodoList';
-import TodoTemplate from './ex05_TodoInsert/TodoTemplate';
-import TodoInsert from './ex05_TodoInsert/TodoInsert';
-import TodoList from './ex05_TodoInsert/TodoList';
+import TodoTemplate from './ex07_toggle/TodoTemplate';
+import TodoInsert from './ex07_toggle/TodoInsert';
+import TodoList from './ex07_toggle/TodoList';
 import { useState, useRef, useCallback } from 'react';
 
 function App() {
@@ -49,12 +40,31 @@ function App() {
     [todos]
   )
 
+  const onRemove = useCallback(
+    id => {
+      // id에 해당하지 않는 항목만, 재저장
+      setTodos(todos.filter(todo => todo.id !== id));
+    },
+    [todos]
+  );
+
+  const onToggle = useCallback(
+    id => {
+      setTodos(
+        todos.map(todo => 
+          todo.id === id ? {...todo, checked : !todo.checked} : todo,
+        )
+      )
+    },
+    [todos]
+  )
+
 
   return (
     <>
     <TodoTemplate>
       <TodoInsert onInsert={onInsert}/>
-      <TodoList todos={todos}/>
+      <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
     </TodoTemplate>
     </>
   );
