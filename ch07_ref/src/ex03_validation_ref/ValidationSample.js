@@ -18,6 +18,8 @@ class ValidationSample extends Component {
     this.setState({
       clicked: true,
       validated: this.state.password === "0000",
+      // 입력하여 버튼 클릭 후에 password 값 리셋
+      password: "",
     });
 
     // 바로 다시 입력할 수 있도록 <input/>에 포커스를 준다.
